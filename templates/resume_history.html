@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="dashboard-card">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h2>📄 Resume History</h2>
+
+            <a href="{% url 'upload_resume' %}"
+               class="btn btn-primary">
+
+                Upload New Resume
+
+            </a>
+
+        </div>
+
+        {% if resumes %}
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+                        <th>Uploaded On</th>
+                        <th>Resume</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for resume in resumes %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+
+                        <td>{{ resume.uploaded_at }}</td>
+
+                        <td>{{ resume.resume.name }}</td>
+
+                        <td>
+
+                            <a href="{{ resume.resume.url }}"
+                               target="_blank"
+                               class="btn btn-outline-primary btn-sm">
+
+                                View Resume
+
+                            </a>
+                            <a href="{% url 'delete_resume' resume.id %}"
+   class="btn btn-danger btn-sm"
+   onclick="return confirm('Delete this resume?');">
+
+    🗑 Delete
+
+</a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        {% else %}
+
+            <div class="alert alert-info">
+
+                No resumes uploaded yet.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

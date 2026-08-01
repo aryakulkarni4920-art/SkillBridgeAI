@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10 col-xl-9">
+     <div class="dashboard-card chatbot-card">
+
+                <h2 class="fw-bold mb-3">
+                    🤖 AI Career Assistant
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Ask anything about careers, skills, interviews, resumes, or learning paths.
+                </p>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <textarea
+                        name="question"
+                        class="form-control mb-3"
+                        rows="5"
+                        placeholder="Example: What should I learn after Django?"></textarea>
+
+                    <button class="btn btn-primary">
+
+                        Ask AI
+
+                    </button>
+
+                </form>
+
+                {% if answer %}
+
+                <hr class="my-4">
+
+                <h5>🤖 AI Response</h5>
+
+                <div class="alert alert-light border mt-3 chat-response">
+
+    {{ answer|linebreaks }}
+
+</div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

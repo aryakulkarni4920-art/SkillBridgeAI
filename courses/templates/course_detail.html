@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="dashboard-card">
+
+        <h2 class="fw-bold mb-3">
+            📘 {{ course_name }}
+        </h2>
+
+        <p class="text-muted">
+            This course is recommended based on your resume analysis.
+            Completing it will help you improve your skills and increase your match score.
+        </p>
+
+        <hr>
+
+        <h4 class="mb-3">
+            What you'll learn
+        </h4>
+
+        <ul class="mb-4">
+            <li>Industry-standard concepts</li>
+            <li>Hands-on practical projects</li>
+            <li>Interview preparation</li>
+            <li>Problem-solving skills</li>
+            <li>Best coding practices</li>
+        </ul>
+
+        <a href="{{ course_link }}"
+           target="_blank"
+           class="btn btn-primary">
+
+            🌐 Visit Course
+
+        </a>
+
+        <a href="{% url 'dashboard' %}"
+           class="btn btn-outline-secondary ms-2">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

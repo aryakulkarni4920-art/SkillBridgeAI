@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        📚 Recommended Courses
+    </h2>
+
+    {% if career %}
+        <p>
+            Selected Career:
+            <strong>{{ career.career_name }}</strong>
+        </p>
+    {% endif %}
+
+    <div class="row">
+
+        {% for course in courses %}
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h5>{{ course.title }}</h5>
+
+                    <p>
+                        <strong>Platform:</strong>
+                        {{ course.platform }}
+                    </p>
+
+                    <p>
+                        <strong>Level:</strong>
+                        {{ course.level }}
+                    </p>
+
+                    <a href="{{ course.link }}"
+                       target="_blank"
+                       class="btn btn-primary">
+
+                        Open Course
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-warning">
+
+                No courses found for this career.
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

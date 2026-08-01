@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-5">
+        🎯 Choose Your Career Goal
+    </h1>
+
+<div class="row justify-content-center mb-5">
+
+    <div class="col-lg-8">
+
+        <form
+    id="careerForm"
+    method="POST"
+    action="{% url 'save_custom_career' %}">
+
+    {% csrf_token %}
+
+    <div class="position-relative">
+
+        <div class="d-flex gap-2">
+
+            <input
+                type="text"
+                id="careerSearch"
+                name="career_name"
+                class="form-control form-control-lg"
+                placeholder="🔍 Search a valid career..."
+                autocomplete="off"
+                required>
+
+            <button
+                type="submit"
+                id="selectCareerBtn"
+                class="btn btn-info px-3"
+                disabled>
+
+                Select Career
+
+            </button>
+
+        </div>
+
+        <div
+            id="careerSuggestions"
+            class="list-group shadow bg-white"
+            style="
+                position:absolute;
+                top:100%;
+                left:0;
+                width:calc(100% - 150px);
+                margin-top:5px;
+                z-index:1000;
+                display:none;
+                max-height:250px;
+                overflow-y:auto;
+            ">
+        </div>
+
+    </div>
+
+</form>
+
+        <small class="text-muted">
+
+            Examples:
+            AI Engineer,
+            Flutter Developer,
+            Java Developer,
+            DevOps Engineer,
+            Prompt Engineer
+
+        </small>
+
+    </div>
+
+</div>
+</div>
+    <div class="text-center mb-4">
+
+    <h3 class="fw-bold">
+        ⭐ Popular Careers
+    </h3>
+
+    <p class="text-muted">
+        Or choose from our most popular career paths
+    </p>
+
+</div>
+
+<div class="row">
+
+    {% for career in careers %}
+
+    <div class="col-md-4 mb-4 career-item"
+         data-career="{{ career.career_name|lower }}">
+
+        <div class="card shadow h-100">
+
+            <div class="card-body text-center">
+
+                <h2>{{ career.icon }}</h2>
+
+                <h4>{{ career.career_name }}</h4>
+
+                <p>{{ career.description }}</p>
+
+                <a href="{% url 'save_career' career.id %}"
+   class="btn btn-primary career-btn"
+   onclick="showCareerLoader(this)">
+
+    Select
+
+</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="col-12 text-center">
+
+        <h5>No careers found.</h5>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+<script>
+
+const selectBtn = document.getElementById("selectCareerBtn");
+const searchBox = document.getElementById("careerSearch");
+const suggestions = document.getElementById("careerSuggestions");
+
+const careers = [
+{% for career in careers %}
+{
+    name: "{{ career.career_name|escapejs }}",
+    icon: "{{ career.icon }}"
+},
+{% endfor %}
+];
+
+searchBox.addEventListener("input", function () {
+
+    const value = this.value.trim().toLowerCase();
+
+    selectBtn.disabled = true;
+
+    suggestions.innerHTML = "";
+
+    if (value === "") {
+        suggestions.style.display = "none";
+        return;
+    }
+
+    const matches = careers.filter(career =>
+        career.name.toLowerCase().includes(value)
+    );
+
+    if (matches.length === 0) {
+
+        suggestions.innerHTML = `
+        <div class="list-group-item text-danger">
+            ❌ No career found
+        </div>`;
+
+        suggestions.style.display = "block";
+        return;
+    }
+
+    matches.forEach(career => {
+
+        const item = document.createElement("button");
+
+        item.type = "button";
+
+        item.className = "list-group-item list-group-item-action";
+
+        item.innerHTML = `${career.icon} ${career.name}`;
+
+        item.onclick = function () {
+
+            searchBox.value = career.name;
+
+            selectBtn.disabled = false;
+
+            suggestions.style.display = "none";
+
+        };
+
+        suggestions.appendChild(item);
+
+    });
+
+    suggestions.style.display = "block";
+
+});
+
+document.addEventListener("click", function(e){
+
+    if(!searchBox.contains(e.target) &&
+       !suggestions.contains(e.target)){
+
+        suggestions.style.display = "none";
+
+    }
+
+});
+
+</script>
+<script>
+
+function showCareerLoader(button){
+
+    button.innerHTML = `
+        <span class="spinner-border spinner-border-sm"></span>
+        Analyzing...
+    `;
+
+    button.classList.add("disabled");
+
+}
+
+</script>
+{% endblock %}
