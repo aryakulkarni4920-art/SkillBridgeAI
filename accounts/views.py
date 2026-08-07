@@ -35,7 +35,7 @@ def register(request):
 
         messages.success(request, "Account created successfully!")
 
-        return redirect('home')
+        return redirect('/')
 
     return render(request, 'register.html') 
 def login_user(request):
@@ -57,7 +57,7 @@ def login_user(request):
 
             messages.success(request, "Login Successful!")
 
-            return redirect('home')
+            return redirect('/')
 
         else:
 
