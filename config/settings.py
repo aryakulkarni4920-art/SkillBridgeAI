@@ -34,7 +34,7 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://YOUR-RAILWAY-DOMAIN.up.railway.app",
+    "https://skillbridgeai-production-2b36.up.railway.app/",
 ]
 
 # Application definition
