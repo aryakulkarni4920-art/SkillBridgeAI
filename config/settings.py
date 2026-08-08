@@ -32,11 +32,12 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://skillbridgeai-production-2b36.up.railway.app/",
+    "https://skillbridgeai-production-f886.up.railway.app",
 ]
-
 # Application definition
 
 INSTALLED_APPS = [
