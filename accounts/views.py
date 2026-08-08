@@ -109,23 +109,34 @@ def edit_profile(request):
 
     if request.method == "POST":
 
-        user_form = UserUpdateForm(
-            request.POST,
-            instance=request.user
-        )
+     user_form = UserUpdateForm(
+        request.POST,
+        instance=request.user
+    )
 
-        profile_form = ProfileUpdateForm(
-            request.POST,
-            request.FILES,
-            instance=profile
-        )
+    profile_form = ProfileUpdateForm(
+        request.POST,
+        request.FILES,
+        instance=profile
+    )
 
-        if user_form.is_valid() and profile_form.is_valid():
+    print("FILES:", request.FILES)
 
-            user_form.save()
-            profile_form.save()
+    if user_form.is_valid():
+        print("User form valid")
+    else:
+        print(user_form.errors)
 
-            return redirect("profile")
+    if profile_form.is_valid():
+        print("Profile form valid")
+    else:
+        print(profile_form.errors)
+
+    if user_form.is_valid() and profile_form.is_valid():
+        user_form.save()
+        profile_form.save()
+        print("Saved successfully")
+        return redirect("profile")
 
     else:
 
