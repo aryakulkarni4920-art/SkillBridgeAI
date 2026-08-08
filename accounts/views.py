@@ -101,62 +101,41 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
+    try:
+        profile, created = Profile.objects.get_or_create(user=request.user)
 
-    # Create a profile if it doesn't already exist
-    profile, created = Profile.objects.get_or_create(
-        user=request.user
-    )
+        if request.method == "POST":
+            user_form = UserUpdateForm(request.POST, instance=request.user)
+            profile_form = ProfileUpdateForm(
+                request.POST,
+                request.FILES,
+                instance=profile
+            )
 
-    if request.method == "POST":
+            print("FILES:", request.FILES)
 
-     user_form = UserUpdateForm(
-        request.POST,
-        instance=request.user
-    )
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                print("Saved successfully")
+                return redirect("profile")
 
-    profile_form = ProfileUpdateForm(
-        request.POST,
-        request.FILES,
-        instance=profile
-    )
+            print(user_form.errors)
+            print(profile_form.errors)
 
-    print("FILES:", request.FILES)
+        else:
+            user_form = UserUpdateForm(instance=request.user)
+            profile_form = ProfileUpdateForm(instance=profile)
 
-    if user_form.is_valid():
-        print("User form valid")
-    else:
-        print(user_form.errors)
-
-    if profile_form.is_valid():
-        print("Profile form valid")
-    else:
-        print(profile_form.errors)
-
-    if user_form.is_valid() and profile_form.is_valid():
-        user_form.save()
-        profile_form.save()
-        print("Saved successfully")
-        return redirect("profile")
-
-    else:
-
-        user_form = UserUpdateForm(
-            instance=request.user
+        return render(
+            request,
+            "accounts/edit_profile.html",
+            {
+                "user_form": user_form,
+                "profile_form": profile_form,
+            }
         )
 
-        try:
-         profile_form = ProfileUpdateForm(instance=profile)
-        except Exception as e:
-         print("ERROR:", e)
-         raise
-
-    context = {
-        "user_form": user_form,
-        "profile_form": profile_form,
-    }
-
-    return render(
-        request,
-        "accounts/edit_profile.html",
-        context
-    )
+    except Exception as e:
+        print("ERROR:", repr(e))
+        raise
