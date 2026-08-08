@@ -144,9 +144,11 @@ def edit_profile(request):
             instance=request.user
         )
 
-        profile_form = ProfileUpdateForm(
-            instance=profile
-        )
+        try:
+         profile_form = ProfileUpdateForm(instance=profile)
+        except Exception as e:
+         print("ERROR:", e)
+         raise
 
     context = {
         "user_form": user_form,
