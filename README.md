@@ -156,7 +156,7 @@ SkillBridgeAI/
 Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/SkillBridgeAI.git
+git clone https://github.com/aryakulkarni4920/SkillBridgeAI.git
 ```
 
 Move into project
@@ -222,8 +222,7 @@ python manage.py runserver
 **Arya Kulkarni**
 
 GitHub:
-https://github.com/YOUR_USERNAME
-
+https://github.com/aryakulkarni4920-art
 ---
 
 ⭐ If you like this project, don't forget to star the repository!
