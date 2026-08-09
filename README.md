@@ -6,8 +6,7 @@ An AI-powered Career Guidance Platform that helps students choose the right care
 
 ## 🌐 Live Demo
 
-🔗 https://skillbridgeai-production-b9ec.up.railway.app/
-
+🔗 https://skillbridgeai-production-f886.up.railway.app/
 ---
 
 # 📌 Project Overview
@@ -156,7 +155,7 @@ SkillBridgeAI/
 Clone the repository
 
 ```bash
-git clone https://github.com/aryakulkarni4920/SkillBridgeAI.git
+git clone https://github.com/aryakulkarni4920-art/SkillBridgeAI.git
 ```
 
 Move into project
